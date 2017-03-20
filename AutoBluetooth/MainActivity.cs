@@ -3,14 +3,24 @@ using Android.Widget;
 using Android.OS;
 using System;
 using Android.Hardware;
+using Android.Gms.Common;
+using Android.Gms.Common.Apis;
+using Android.Content;
+using Android.Gms.Location;
+using Android.Util;
 
 namespace AutoBluetooth
 {
     [Activity(Label = "AutoBluetooth", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
+        // update at about 10 seconds
+        private const int DetectionInterval = 10000;
+        private const string Tag = nameof(MainActivity);
+
         private CheckBox chkSensorSupported;
         private TextView tvDetectedActivityPlaceholder;
+        private GoogleApiClient googleClient;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -28,7 +38,68 @@ namespace AutoBluetooth
 
         private void OnStartServiceClick(object sender, EventArgs e)
         {
+            if (sender is Button btn)
+            {
+                btn.Enabled = false;
+            };
 
+            SetupPlayServices();
+        }
+
+        private void SetupPlayServices()
+        {
+            if (IsPlayServicesAvailable())
+            {
+                SetupActivityListener();
+            }
+            else
+            {
+                NotifyInstallPlayServices();
+            }
+        }
+
+        private bool IsPlayServicesAvailable()
+        {
+            var availability = GoogleApiAvailability.Instance;
+            return availability.IsGooglePlayServicesAvailable(this) == ConnectionResult.Success;
+        }
+
+        private void SetupActivityListener()
+        {
+            Action<Bundle> connectedCallback = (arg0) =>
+            {
+                if (googleClient != null)
+                {
+                    Intent intent = new Intent(this, typeof(BluetoothOnDrivingService));
+                    var pIntent = PendingIntent.GetService(this, 0, intent, PendingIntentFlags.UpdateCurrent);
+                    ActivityRecognition.ActivityRecognitionApi.RequestActivityUpdates(googleClient, DetectionInterval, pIntent);
+                }
+            };
+
+            Action<int> connectionSuspendedCallback =
+                (cause) => Log.Warn(Tag, "Connection suspended " + cause);
+
+            Action<ConnectionResult> connectionFailedCallback = (r) =>
+            {
+                Log.Warn(Tag, "Connection failed " + r.ErrorMessage);
+                Toast.MakeText(this, Resource.String.toast_play_api_connection_fail, ToastLength.Long)
+                    .Show();
+            };
+
+            googleClient = new GoogleApiClient.Builder(this)
+                .AddApi(ActivityRecognition.API)
+                .AddConnectionCallbacks(connectedCallback, connectionSuspendedCallback)
+                .AddOnConnectionFailedListener(connectionFailedCallback)
+                .Build();
+            googleClient.Connect();
+        }
+
+        private void NotifyInstallPlayServices()
+        {
+            new AlertDialog.Builder(this)
+                .SetTitle(Resource.String.no_google_play)
+                .SetMessage(Resource.String.msg_install_google_play)
+                .Show();
         }
 
         private void CheckSensorSupported()

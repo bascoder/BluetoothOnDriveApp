@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ApplicationName">AutoBluetooth</string>
-    <string name="sensor_supported">Sensor  supported:</string>
-    <string name="last_detected_activity">Last detected activity:</string>
+  <string name="ApplicationName">AutoBluetooth</string>
+  <string name="sensor_supported">Sensor  supported:</string>
+  <string name="last_detected_activity">Last detected activity:</string>
 
-    <string name="motion_sensor_unsupported">The required motion sensor is unsupported</string>
+  <string name="motion_sensor_unsupported">The required motion sensor is unsupported</string>
+
+  <string name="no_google_play">No Google Play</string>
+  <string name="msg_install_google_play">Please install Google Play Services</string>
+
+  <string name="toast_play_api_connection_fail">Play API connection failed</string>
 </resources>
