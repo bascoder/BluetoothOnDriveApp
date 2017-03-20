@@ -110,6 +110,9 @@ namespace AutoBluetooth
 			// aapt resource value: 0x7f040002
 			public const int last_detected_activity = 2130968578;
 			
+			// aapt resource value: 0x7f040003
+			public const int motion_sensor_unsupported = 2130968579;
+			
 			// aapt resource value: 0x7f040001
 			public const int sensor_supported = 2130968577;
 			
