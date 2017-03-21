@@ -88,6 +88,7 @@
   <ItemGroup>
     <Compile Include="BluetoothOnDrivingService.cs" />
     <Compile Include="DetectedActivityExtension.cs" />
+    <Compile Include="Helper\BluetoothHelper.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

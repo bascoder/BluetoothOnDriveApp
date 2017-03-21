@@ -3,6 +3,7 @@ using Android.Bluetooth;
 using Android.Content;
 using Android.Gms.Location;
 using Android.Util;
+using AutoBluetooth.Helper;
 
 namespace AutoBluetooth
 {
@@ -74,11 +75,18 @@ namespace AutoBluetooth
         private void DisableBluetooth()
         {
             var adapter = BluetoothAdapter.DefaultAdapter;
-            if (adapter.IsEnabled)
+            if (CanDisableBluetooth(adapter))
             {
                 adapter.Disable();
                 Log.Debug(Tag, "Disabled bluetooth");
             }
+        }
+
+        private static bool CanDisableBluetooth(BluetoothAdapter adapter)
+        {
+            return adapter.IsEnabled &&
+                // only disconnect if bluetooth is not in use
+                !BluetoothHelper.GuessHasActiveConnection(adapter);
         }
     }
 }
