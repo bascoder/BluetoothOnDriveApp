@@ -38,7 +38,7 @@ namespace AutoBluetooth
             }
             else
             {
-                Log.Info(Tag, $"Ignored detected activity ({activity.ToHumanText()}) because of low confidence ({confidence})");
+                Log.Verbose(Tag, $"Ignored detected activity ({activity.ToHumanText()}) because of low confidence ({confidence})");
             }
         }
 
@@ -51,6 +51,7 @@ namespace AutoBluetooth
         {
             if (activity.Type == DetectedActivity.InVehicle)
             {
+                Log.Info(Tag, $"Detected ({activity.ToHumanText()}) with confidence ({activity.Confidence}), so enabling bluetooth");
                 EnableBluetooth();
             }
             else
