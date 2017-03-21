@@ -1,4 +1,7 @@
+using Android.Annotation;
 using Android.Bluetooth;
+using Android.Content;
+using Android.OS;
 
 namespace AutoBluetooth.Helper
 {
@@ -22,6 +25,33 @@ namespace AutoBluetooth.Helper
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Returns bluetooth adapter for devices API level
+        /// </summary>
+        /// <param name="context">Application context</param>
+        /// <returns>BluetoothAdapter</returns>
+        public static BluetoothAdapter ObtainBluetoothAdapter(Context context)
+        {
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.JellyBeanMr2)
+            {
+                return ObtainBluetoothAdapterService(context);
+            }
+            return ObtainBluetoothAdapterLegacy();
+        }
+
+        [TargetApi(Value = (int)BuildVersionCodes.JellyBeanMr2)]
+        private static BluetoothAdapter ObtainBluetoothAdapterService(Context context)
+        {
+            var bluetoothManager = (BluetoothManager)context.GetSystemService(Context.BluetoothService);
+            return bluetoothManager.Adapter;
+        }
+
+        [TargetApi(Value = (int)BuildVersionCodes.Eclair)]
+        private static BluetoothAdapter ObtainBluetoothAdapterLegacy()
+        {
+            return BluetoothAdapter.DefaultAdapter;
         }
     }
 }

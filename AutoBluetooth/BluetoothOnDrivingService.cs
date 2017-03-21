@@ -64,7 +64,7 @@ namespace AutoBluetooth
 
         private void EnableBluetooth()
         {
-            var adapter = BluetoothAdapter.DefaultAdapter;
+            var adapter = BluetoothHelper.ObtainBluetoothAdapter(this);
             if (!adapter.IsEnabled)
             {
                 adapter.Enable();
@@ -74,7 +74,7 @@ namespace AutoBluetooth
 
         private void DisableBluetooth()
         {
-            var adapter = BluetoothAdapter.DefaultAdapter;
+            var adapter = BluetoothHelper.ObtainBluetoothAdapter(this);
             if (CanDisableBluetooth(adapter))
             {
                 adapter.Disable();
