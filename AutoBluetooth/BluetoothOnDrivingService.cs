@@ -10,6 +10,9 @@ namespace AutoBluetooth
     [Service]
     public class BluetoothOnDrivingService : IntentService
     {
+        public const string BroadcastAction = "BluetoothOnDrivingService_NewDetectedActivity";
+        public const string KeyActivity = "Activity";
+
         private const int MinConfidence = 50;
         private const string Tag = nameof(BluetoothOnDrivingService);
 
@@ -35,7 +38,7 @@ namespace AutoBluetooth
 
             if (IsConfident(confidence))
             {
-                ChangeBluetooth(activity);
+                HandleDetectedActivity(activity);
             }
             else
             {
@@ -43,9 +46,23 @@ namespace AutoBluetooth
             }
         }
 
+        private void HandleDetectedActivity(DetectedActivity activity)
+        {
+            ChangeBluetooth(activity);
+            BroadcastDetectedActivity(activity);
+        }
+
         private static bool IsConfident(int confidence)
         {
             return confidence >= MinConfidence;
+        }
+
+        private void BroadcastDetectedActivity(DetectedActivity activitiy)
+        {
+            Intent broadcastIntent = new Intent(BroadcastAction);
+            broadcastIntent.PutExtra(KeyActivity, activitiy);
+
+            SendBroadcast(broadcastIntent);
         }
 
         private void ChangeBluetooth(DetectedActivity activity)

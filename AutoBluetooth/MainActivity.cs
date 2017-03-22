@@ -22,6 +22,8 @@ namespace AutoBluetooth
         private TextView tvDetectedActivityPlaceholder;
         private GoogleApiClient googleClient;
 
+        private BroadcastReceiver detectedActivityReceiver;
+
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
@@ -36,6 +38,16 @@ namespace AutoBluetooth
             CheckSensorSupported();
         }
 
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            if (detectedActivityReceiver != null)
+            {
+                UnregisterReceiver(detectedActivityReceiver);
+            }
+        }
+
         private void OnStartServiceClick(object sender, EventArgs e)
         {
             if (sender is Button btn)
@@ -43,7 +55,17 @@ namespace AutoBluetooth
                 btn.Enabled = false;
             };
 
+            SetupBroadcastReceiver();
             SetupPlayServices();
+        }
+
+        private void SetupBroadcastReceiver()
+        {
+            detectedActivityReceiver = new DetectedActivityBroadcastReceiver(this);
+
+            IntentFilter filter = new IntentFilter();
+            filter.AddAction(BluetoothOnDrivingService.BroadcastAction);
+            RegisterReceiver(detectedActivityReceiver, filter);
         }
 
         private void SetupPlayServices()
@@ -125,6 +147,35 @@ namespace AutoBluetooth
             var sensors = sensorManager.GetSensorList(SensorType.SignificantMotion);
 
             return sensors.Count > 0;
+        }
+
+        [BroadcastReceiver(Enabled = true)]
+        private class DetectedActivityBroadcastReceiver : BroadcastReceiver
+        {
+            private WeakReference<MainActivity> parent;
+
+            public DetectedActivityBroadcastReceiver()
+            {
+
+            }
+
+            public DetectedActivityBroadcastReceiver(MainActivity parent)
+            {
+                this.parent = new WeakReference<MainActivity>(parent);
+            }
+
+            public override void OnReceive(Context context, Intent intent)
+            {
+                var activity = intent.GetParcelableExtra(BluetoothOnDrivingService.KeyActivity) as DetectedActivity;
+                if (activity != null)
+                {
+                    parent.TryGetTarget(out MainActivity parentActivity);
+                    if (parentActivity != null)
+                    {
+                        parentActivity.tvDetectedActivityPlaceholder.Text = activity.ToHumanText();
+                    }
+                }
+            }
         }
     }
 }
