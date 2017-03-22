@@ -211,14 +211,23 @@ namespace AutoBluetooth
 			// aapt resource value: 0x7f070002
 			public const int none = 2131165186;
 			
+			// aapt resource value: 0x7f07000f
+			public const int spSelectCar = 2131165199;
+			
 			// aapt resource value: 0x7f070004
 			public const int standard = 2131165188;
+			
+			// aapt resource value: 0x7f070010
+			public const int textItem = 2131165200;
 			
 			// aapt resource value: 0x7f07000d
 			public const int tvDetectedActivityPlaceholder = 2131165197;
 			
 			// aapt resource value: 0x7f07000c
 			public const int tvLastDetectedActivity = 2131165196;
+			
+			// aapt resource value: 0x7f07000e
+			public const int tvSelectCar = 2131165198;
 			
 			// aapt resource value: 0x7f07000a
 			public const int tvSensorSupported = 2131165194;
@@ -257,6 +266,9 @@ namespace AutoBluetooth
 			
 			// aapt resource value: 0x7f030000
 			public const int Main = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int SpinnerView = 2130903041;
 			
 			static Layout()
 			{
@@ -328,20 +340,23 @@ namespace AutoBluetooth
 			// aapt resource value: 0x7f050013
 			public const int last_detected_activity = 2131034131;
 			
-			// aapt resource value: 0x7f050014
-			public const int motion_sensor_unsupported = 2131034132;
+			// aapt resource value: 0x7f050015
+			public const int motion_sensor_unsupported = 2131034133;
+			
+			// aapt resource value: 0x7f050017
+			public const int msg_install_google_play = 2131034135;
 			
 			// aapt resource value: 0x7f050016
-			public const int msg_install_google_play = 2131034134;
+			public const int no_google_play = 2131034134;
 			
-			// aapt resource value: 0x7f050015
-			public const int no_google_play = 2131034133;
+			// aapt resource value: 0x7f050014
+			public const int select_car = 2131034132;
 			
 			// aapt resource value: 0x7f050012
 			public const int sensor_supported = 2131034130;
 			
-			// aapt resource value: 0x7f050017
-			public const int toast_play_api_connection_fail = 2131034135;
+			// aapt resource value: 0x7f050018
+			public const int toast_play_api_connection_fail = 2131034136;
 			
 			static String()
 			{

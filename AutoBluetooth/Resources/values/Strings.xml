@@ -3,6 +3,7 @@
   <string name="ApplicationName">AutoBluetooth</string>
   <string name="sensor_supported">Sensor  supported:</string>
   <string name="last_detected_activity">Last detected activity:</string>
+  <string name="select_car">Select car:</string>
 
   <string name="motion_sensor_unsupported">The required motion sensor is unsupported</string>
 

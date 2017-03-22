@@ -8,6 +8,9 @@ using Android.Gms.Common.Apis;
 using Android.Content;
 using Android.Gms.Location;
 using Android.Util;
+using Android.Bluetooth;
+using AutoBluetooth.Helper;
+using System.Linq;
 
 namespace AutoBluetooth
 {
@@ -20,6 +23,8 @@ namespace AutoBluetooth
 
         private CheckBox chkSensorSupported;
         private TextView tvDetectedActivityPlaceholder;
+        private Spinner spSelectCar;
+
         private GoogleApiClient googleClient;
 
         private BroadcastReceiver detectedActivityReceiver;
@@ -33,7 +38,9 @@ namespace AutoBluetooth
             Button btnStartService = FindViewById<Button>(Resource.Id.btnStartService);
             chkSensorSupported = FindViewById<CheckBox>(Resource.Id.chSensorSupported);
             tvDetectedActivityPlaceholder = FindViewById<TextView>(Resource.Id.tvDetectedActivityPlaceholder);
+            spSelectCar = FindViewById<Spinner>(Resource.Id.spSelectCar);
 
+            InitCarSelector();
             btnStartService.Click += OnStartServiceClick;
             CheckSensorSupported();
         }
@@ -46,6 +53,14 @@ namespace AutoBluetooth
             {
                 UnregisterReceiver(detectedActivityReceiver);
             }
+        }
+
+        private void InitCarSelector()
+        {
+            var pairedDevices = BluetoothHelper.ObtainBluetoothAdapter(this).BondedDevices.ToArray();
+            var adapter = new ArrayAdapter<BluetoothDevice>(this, Resource.Layout.SpinnerView, pairedDevices);  
+
+            spSelectCar.Adapter = adapter;
         }
 
         private void OnStartServiceClick(object sender, EventArgs e)
