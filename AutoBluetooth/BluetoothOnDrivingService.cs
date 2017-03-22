@@ -74,7 +74,6 @@ namespace AutoBluetooth
             }
             else
             {
-                Log.Debug(Tag, "Not in vehicle but " + activity.ToHumanText());
                 DisableBluetooth();
             }
         }
@@ -85,7 +84,6 @@ namespace AutoBluetooth
             if (!adapter.IsEnabled)
             {
                 adapter.Enable();
-                Log.Debug(Tag, "Enabled bluetooth");
             }
         }
 
@@ -95,7 +93,6 @@ namespace AutoBluetooth
             if (CanDisableBluetooth(adapter))
             {
                 adapter.Disable();
-                Log.Debug(Tag, "Disabled bluetooth");
             }
         }
 
