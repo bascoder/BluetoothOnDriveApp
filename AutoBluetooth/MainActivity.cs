@@ -11,6 +11,7 @@ using Android.Util;
 using Android.Bluetooth;
 using AutoBluetooth.Helper;
 using System.Linq;
+using Android.Views;
 
 namespace AutoBluetooth
 {
@@ -58,7 +59,7 @@ namespace AutoBluetooth
         private void InitCarSelector()
         {
             var pairedDevices = BluetoothHelper.ObtainBluetoothAdapter(this).BondedDevices.ToArray();
-            var adapter = new ArrayAdapter<BluetoothDevice>(this, Resource.Layout.SpinnerView, pairedDevices);  
+            var adapter = new BluetoothDeviceAdapter(this, pairedDevices);
 
             spSelectCar.Adapter = adapter;
         }
@@ -190,6 +191,47 @@ namespace AutoBluetooth
                         parentActivity.tvDetectedActivityPlaceholder.Text = activity.ToHumanText();
                     }
                 }
+            }
+        }
+
+        private class BluetoothDeviceAdapter : BaseAdapter
+        {
+            public override int Count => array?.Length ?? 0;
+
+            private BluetoothDevice[] array;
+            private WeakReference<Context> context;
+
+            public BluetoothDeviceAdapter(Context context, BluetoothDevice[] initialArray)
+            {
+                this.context = new WeakReference<Context>(context);
+                this.array = initialArray;
+            }
+
+            public override Java.Lang.Object GetItem(int position)
+            {
+                return array[position];
+            }
+
+            public override long GetItemId(int position)
+            {
+                return position;
+            }
+
+            public override View GetView(int position, View convertView, ViewGroup parent)
+            {
+                this.context.TryGetTarget(out Context context);
+
+                var textView = convertView as TextView;
+                if (textView == null)
+                {
+                    if (context == null) return convertView;
+                    textView = (TextView)LayoutInflater.From(context).Inflate(Resource.Layout.SpinnerView, parent, false);
+                }
+
+                var str = array[position].Name;
+                textView.SetText(new Java.Lang.String(str), TextView.BufferType.Normal);
+
+                return textView;
             }
         }
     }
