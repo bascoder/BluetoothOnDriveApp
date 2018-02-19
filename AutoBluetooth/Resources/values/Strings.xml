@@ -3,6 +3,7 @@
   <string name="ApplicationName">AutoBluetooth</string>
   <string name="sensor_supported">Sensor  supported:</string>
   <string name="last_detected_activity">Last detected activity:</string>
+  <string name="adjust_min_confidence">Adjust minimum confidence</string>
 
   <string name="motion_sensor_unsupported">The required motion sensor is unsupported</string>
 
@@ -10,4 +11,7 @@
   <string name="msg_install_google_play">Please install Google Play Services</string>
 
   <string name="toast_play_api_connection_fail">Play API connection failed</string>
+
+  <string name="shared_preferences_key">AUTO_BLUETOOTH_PREF_KEY</string>
+  <string name="preference_min_confidence">KEY_MIN_CONFIDENCE</string>
 </resources>

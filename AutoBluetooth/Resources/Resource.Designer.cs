@@ -214,6 +214,9 @@ namespace AutoBluetooth
 			// aapt resource value: 0x7f070004
 			public const int standard = 2131165188;
 			
+			// aapt resource value: 0x7f07000e
+			public const int tvConfidencePreference = 2131165198;
+			
 			// aapt resource value: 0x7f07000d
 			public const int tvDetectedActivityPlaceholder = 2131165197;
 			
@@ -222,6 +225,9 @@ namespace AutoBluetooth
 			
 			// aapt resource value: 0x7f07000a
 			public const int tvSensorSupported = 2131165194;
+			
+			// aapt resource value: 0x7f07000f
+			public const int txtMinConfidence = 2131165199;
 			
 			// aapt resource value: 0x7f070005
 			public const int wide = 2131165189;
@@ -238,6 +244,9 @@ namespace AutoBluetooth
 		
 		public partial class Integer
 		{
+			
+			// aapt resource value: 0x7f060001
+			public const int default_min_confidence = 2131099649;
 			
 			// aapt resource value: 0x7f060000
 			public const int google_play_services_version = 2131099648;
@@ -273,6 +282,9 @@ namespace AutoBluetooth
 			
 			// aapt resource value: 0x7f050011
 			public const int ApplicationName = 2131034129;
+			
+			// aapt resource value: 0x7f050014
+			public const int adjust_min_confidence = 2131034132;
 			
 			// aapt resource value: 0x7f050000
 			public const int common_google_play_services_enable_button = 2131034112;
@@ -328,20 +340,26 @@ namespace AutoBluetooth
 			// aapt resource value: 0x7f050013
 			public const int last_detected_activity = 2131034131;
 			
-			// aapt resource value: 0x7f050014
-			public const int motion_sensor_unsupported = 2131034132;
+			// aapt resource value: 0x7f050015
+			public const int motion_sensor_unsupported = 2131034133;
+			
+			// aapt resource value: 0x7f050017
+			public const int msg_install_google_play = 2131034135;
 			
 			// aapt resource value: 0x7f050016
-			public const int msg_install_google_play = 2131034134;
+			public const int no_google_play = 2131034134;
 			
-			// aapt resource value: 0x7f050015
-			public const int no_google_play = 2131034133;
+			// aapt resource value: 0x7f05001a
+			public const int preference_min_confidence = 2131034138;
 			
 			// aapt resource value: 0x7f050012
 			public const int sensor_supported = 2131034130;
 			
-			// aapt resource value: 0x7f050017
-			public const int toast_play_api_connection_fail = 2131034135;
+			// aapt resource value: 0x7f050019
+			public const int shared_preferences_key = 2131034137;
+			
+			// aapt resource value: 0x7f050018
+			public const int toast_play_api_connection_fail = 2131034136;
 			
 			static String()
 			{

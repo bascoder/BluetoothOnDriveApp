@@ -43,4 +43,24 @@
             android:layout_width="wrap_content"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvConfidencePreference"
+            android:text="@string/adjust_min_confidence"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true" />
+        <EditText
+            android:id="@+id/txtMinConfidence"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="2"
+            android:layout_toRightOf="@id/tvConfidencePreference"
+            android:layout_toEndOf="@id/tvConfidencePreference" />
+    </RelativeLayout>
 </LinearLayout>

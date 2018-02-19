@@ -35,7 +35,15 @@ namespace AutoBluetooth
             tvDetectedActivityPlaceholder = FindViewById<TextView>(Resource.Id.tvDetectedActivityPlaceholder);
 
             btnStartService.Click += OnStartServiceClick;
+            InitMinConfidenceSelector();
             CheckSensorSupported();
+        }
+
+        private void InitMinConfidenceSelector()
+        {
+            var txtMinConfidence = FindViewById<EditText>(Resource.Id.txtMinConfidence);
+            txtMinConfidence.Text = Resources.GetInteger(Resource.Integer.default_min_confidence).ToString();
+            txtMinConfidence.TextChanged += TxtMinConfidence_TextChanged;
         }
 
         protected override void OnDestroy()
@@ -57,6 +65,29 @@ namespace AutoBluetooth
 
             SetupBroadcastReceiver();
             SetupPlayServices();
+        }
+
+        private void TxtMinConfidence_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
+        {
+            if (sender is EditText txtMinConfidence)
+            {
+                Int32.TryParse(txtMinConfidence.Text, out int selectedConfidence);
+                UpdateMinConfidence(selectedConfidence);
+            }
+        }
+
+        private void UpdateMinConfidence(int selectedConfidence)
+        {
+            if (selectedConfidence >= 0 && selectedConfidence <= 100)
+            {
+                ISharedPreferences sharedPreferences = ObtainSharedPreferences();
+                var editor = sharedPreferences.Edit().PutInt(GetString(Resource.String.preference_min_confidence), selectedConfidence);
+            }
+        }
+
+        private ISharedPreferences ObtainSharedPreferences()
+        {
+            return GetSharedPreferences(GetString(Resource.String.shared_preferences_key), FileCreationMode.Private);
         }
 
         private void SetupBroadcastReceiver()

@@ -13,20 +13,36 @@ namespace AutoBluetooth
         public const string BroadcastAction = "BluetoothOnDrivingService_NewDetectedActivity";
         public const string KeyActivity = "Activity";
 
-        private const int MinConfidence = 50;
         private const string Tag = nameof(BluetoothOnDrivingService);
+
+        private int minConfidence;
 
         public BluetoothOnDrivingService() : base("BluetoothOnDrivingService")
         {
 
         }
 
+        public override void OnCreate()
+        {
+            base.OnCreate();
+
+            minConfidence = Resources.GetInteger(Resource.Integer.default_min_confidence);
+            UpdateMinConfidence();
+        }
+
         protected override void OnHandleIntent(Intent intent)
         {
+            UpdateMinConfidence();
             if (ActivityRecognitionResult.HasResult(intent))
             {
                 HandleActivityRecognitionResult(intent);
             }
+        }
+
+        private void UpdateMinConfidence()
+        {
+            var pref = GetSharedPreferences(GetString(Resource.String.shared_preferences_key), FileCreationMode.Private);
+            pref.GetInt(GetString(Resource.String.preference_min_confidence), minConfidence);
         }
 
         private void HandleActivityRecognitionResult(Intent intent)
@@ -52,9 +68,9 @@ namespace AutoBluetooth
             BroadcastDetectedActivity(activity);
         }
 
-        private static bool IsConfident(int confidence)
+        private bool IsConfident(int confidence)
         {
-            return confidence >= MinConfidence;
+            return confidence >= minConfidence;
         }
 
         private void BroadcastDetectedActivity(DetectedActivity activitiy)
