@@ -5,7 +5,7 @@ using Android.OS;
 
 namespace AutoBluetooth.Helper
 {
-    static class BluetoothHelper
+    public static class BluetoothHelper
     {
         /// <summary>
         /// Guess if device has an active bluetooth connection. 

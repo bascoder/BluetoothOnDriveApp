@@ -61,6 +61,7 @@ namespace AutoBluetooth
             if (sender is Button btn)
             {
                 btn.Enabled = false;
+                btn.Text = "Service is running";
             };
 
             SetupBroadcastReceiver();
